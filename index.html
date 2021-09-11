@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Sign Up</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 96vh;
+            font-family: cursive;
+        }
+        #foo{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8vh 2vw;
+            border: 2px solid rgba(0,0,0,.1);
+            border-radius: 10px;
+        }
+        .center{
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+        .btn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+        div label {
+            padding: 5px;        }
+        div input {
+            border: none;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 5px;
+            font-family: cursive;
+            
+        }
+        button {
+            font-family: cursive;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: rgba(0,0,0,0.1);
+            font-size: 1.1rem;
+        }
+        .err{
+            display: none;
+            color:#FF0000;
+            font-size: .8rem;
+        }
+        .success{
+            display: none;
+            color: #81B214;
+            font-size: .8rem;
+        }
+        .dig{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="foo">
+        <form>
+            <div class="center">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" v-model="email">
+                <span class="err" :class="alarm()">Please enter the correct email</span>
+            </div>
+            <div class="center">
+                <label for="password" >password:</label>
+                <input type="password" name="password" id="password" v-model="password">
+                <span class="err" :class="alarm2()">At least 8 characters</span>
+            </div>
+            <div class="center btn">
+                <button type="submit" @click.prevent="emailIsValid(),passwordIsValid(),alert2()">Login</button>
+                <span class="success" :class="alert()" >Login Successful</span>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const bar={
+            data(){
+                return{
+                    email:'',
+                    password:'',
+                    isemail:true,
+                    ispassword:true,
+                    logintrue:false
+                }
+            },computed:{
+
+            },methods: {
+                emailIsValid(){
+                    this.isemail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)
+                },
+                passwordIsValid(){
+                    this.ispassword = this.password.length >= 8 ? true : false
+                },
+                alarm(){
+                    if(this.isemail){
+                        return
+                    }else{
+                        return {
+                            'dig':true
+                        }
+                    }
+                },
+                alarm2(){
+                    if(this.ispassword){
+                        return
+                    }else{
+                        return {
+                            'dig':true
+                        }
+                    } 
+                },
+                alert(){
+                    if(this.isemail&&this.ispassword&&this.logintrue){
+                        return {
+                            'dig':this.logintrue
+                        }
+                    }
+                },alert2(){
+                    if(this.isemail&&this.ispassword)
+                    this.logintrue=true
+                }
+
+            },
+        }
+
+        Vue.createApp(bar).mount('#foo')
+    </script>
+    
+</body>
+</html>
